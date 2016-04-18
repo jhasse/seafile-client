@@ -108,10 +108,12 @@ void RepoTreeModel::setRepos(const std::vector<ServerRepo>& repos)
             repo.readonly = false;
         }
         if (repo.isPersonalRepo()) {
-            if (repo.isVirtual()) {
-                checkVirtualRepo(repo);
-            } else {
-                checkPersonalRepo(repo);
+            if (!repo.isSubfolder()) {
+                if (repo.isVirtual()) {
+                    checkVirtualRepo(repo);
+                } else {
+                    checkPersonalRepo(repo);
+                }
             }
         } else if (repo.isSharedRepo()) {
             checkSharedRepo(repo);
@@ -125,6 +127,9 @@ void RepoTreeModel::setRepos(const std::vector<ServerRepo>& repos)
         // we have a conflicting case, don't use group version if we can
         if (map.contains(repo.id) && repo.isGroupRepo())
             continue;
+        // if (repo.isSubfolder()) {
+        //     continue;
+        // }
         map[repo.id] = repo;
     }
 
