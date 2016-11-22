@@ -39,7 +39,7 @@ gboolean seafile_rpc_instance_connect ()
     }
 
     sync_client_ = ccnet_client_new ();
-    if (ccnet_client_load_confdir (sync_client_, ccnet_dir) < 0)
+    if (ccnet_client_load_confdir (sync_client_, NULL, ccnet_dir) < 0)
     {
         g_object_unref (sync_client_);
         return FALSE;
